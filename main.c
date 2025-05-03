@@ -1,14 +1,15 @@
 #include <stdio.h>
-//#include </usr/include/SDL2/SDL.h>
 #include <SDL3/SDL.h>
 #include <SDL2/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <time.h>
-#define _GAME_WINDOW_SIZE 600;
-const int GAME_WINDOW_SIZE = _GAME_WINDOW_SIZE;
+#define _TTT_GAME_WINDOW_SIZE 600
+#define SQUARES_IN_LINE 3
+const int SQUARE_SIZE = _TTT_GAME_WINDOW_SIZE / SQUARES_IN_LINE;
 
 // Compiler options: -lSDL3
 int main(int argc, char *argv[]) {
+    const int GAME_WINDOW_SIZE = _TTT_GAME_WINDOW_SIZE;
     printf("Hello World!\n");
     int flags[] = {SDL_WINDOW_OCCLUDED, SDL_WINDOW_METAL, SDL_WINDOW_MOUSE_FOCUS};
     int *f = &flags;
@@ -24,17 +25,18 @@ int main(int argc, char *argv[]) {
     SDL_RenderClear(renderer);
     SDL_UpdateWindowSurface(window);
     SDL_SetRenderDrawColor(renderer, 255, 0, 0,SDL_ALPHA_TRANSPARENT); // Красный цвет линии
-    float x1, y1, x2, y2;
-    x1 = y2 = 100;
-    y2 = y2 = 200;
-    bool a = SDL_RenderLine(renderer, x1, y1, x2, y2);
+    for (float i = SQUARE_SIZE; i < GAME_WINDOW_SIZE; i+= SQUARE_SIZE) {
+        bool vertical = SDL_RenderLine(renderer, i, 0, i, _TTT_GAME_WINDOW_SIZE);
+        bool horizontal = SDL_RenderLine(renderer, 0, i, _TTT_GAME_WINDOW_SIZE, i);
+    }
+
     SDL_RenderPresent(renderer);
     SDL_GetError();
 
     SDL_UpdateWindowSurface(screenSurface);
     SDL_Event event;
     while (1) {
-        //if (!SDL_PollEvent(&event)) continue;;
+        //if (!SDL_PollEvent(&event)) continue;
         SDL_WaitEvent(&event);
         if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
             if (event.button.button == SDL_BUTTON_LEFT) {
