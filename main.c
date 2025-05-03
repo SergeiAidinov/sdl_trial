@@ -9,12 +9,18 @@
 // Command line:  gcc main.c -lSDL2 -lSDL2main -o main
 
 
+void SDL_FillRect_renamed_SDL_FillSurfaceRect(SDL_Surface * sdl_surface, void * p, Uint32 uint32);
+
 int main(int argc, char *argv[]) {
     printf("Hello World!\n");
-    //SDL_Init(SDL_INIT_VIDEO);
     int flags[] = {SDL_WINDOW_OCCLUDED, SDL_WINDOW_METAL, SDL_WINDOW_MOUSE_FOCUS};
     int *f = &flags;
     SDL_Window *window = SDL_CreateWindow("Hello SDL3", 300, 600, *f);
+    SDL_Surface* screenSurface = SDL_GetWindowSurface(window);
+    SDL_Rect rect = {0, 0, screenSurface->w, screenSurface->h};
+    Uint32 color = 220898888;
+    SDL_FillSurfaceRect(screenSurface, &rect, color);
+    SDL_UpdateWindowSurface(window);
     SDL_Event event;
     while (1) {
         SDL_WaitEvent(&event);
