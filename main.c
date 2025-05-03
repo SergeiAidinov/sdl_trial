@@ -4,10 +4,7 @@
 #include <SDL3/SDL_main.h>
 #include <time.h>
 
-
-// Compiler options: -lSDL2 -lSDL2main
-// Command line:  gcc main.c -lSDL2 -lSDL2main -o main
-
+// Compiler options: -lSDL3
 
 void SDL_FillRect_renamed_SDL_FillSurfaceRect(SDL_Surface * sdl_surface, void * p, Uint32 uint32);
 
